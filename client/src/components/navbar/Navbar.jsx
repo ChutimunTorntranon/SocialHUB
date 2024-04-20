@@ -20,7 +20,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="left">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span>lamasocial</span>
+          <span>socialHUB</span>
         </Link>
         <HomeOutlinedIcon />
         {darkMode ? (
@@ -39,10 +39,7 @@ const Navbar = () => {
         <EmailOutlinedIcon />
         <NotificationsOutlinedIcon />
         <div className="user">
-          <img
-            src={"/upload/" + currentUser.profilePic}
-            alt=""
-          />
+          <img src={"/upload/" + currentUser.profilePic} alt="" />
           <span>{currentUser.name}</span>
         </div>
       </div>

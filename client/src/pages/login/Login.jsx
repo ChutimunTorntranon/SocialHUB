@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import "./login.scss";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [inputs, setInputs] = useState({
@@ -10,7 +11,7 @@ const Login = () => {
   });
   const [err, setErr] = useState(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -19,11 +20,33 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (!inputs.username || !inputs.password) {
+      setErr("Please fill all information."); // Set error message
+      Swal.fire({
+        title: "Please fill all information",
+        text: "",
+        icon: "warning",
+      });
+      return;
+    }
     try {
       await login(inputs);
-      navigate("/")
+      Swal.fire({
+        title: "Login Success.",
+        text: "",
+        icon: "success",
+      });
+      // setTimeout(() => {
+      //   navigate("/")
+      // }, 1500);
+      navigate("/");
     } catch (err) {
       setErr(err.response.data);
+      Swal.fire({
+        title: "User not found!",
+        text: "",
+        icon: "error",
+      });
     }
   };
 
@@ -57,7 +80,7 @@ const Login = () => {
               name="password"
               onChange={handleChange}
             />
-            {err && err}
+            <div style={{ color: "red" }}>{err && err}</div>
             <button onClick={handleLogin}>Login</button>
           </form>
         </div>
